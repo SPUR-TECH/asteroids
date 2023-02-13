@@ -81,6 +81,7 @@ addEventListener('click', (event) => {
 })
 
 addEventListener('touch', (event) => {
+    event.preventDefault()
     const angle = Math.atan2(
         event.clientY - canvas.height / 2,
         event.clientX - canvas.width / 2
