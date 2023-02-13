@@ -10,20 +10,20 @@ body {
     position: fixed;
     color: yellow;
     padding: 20px;
-    font-size: 20px;
+    font-size: 60px;
 }
 
 #model {
     position: absolute;
     background-image: linear-gradient(rgb(82, 82, 82), rgb(83, 0, 0));
-    height: 250px;
-    width: 400px;
+    height: 450px;
+    width: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 5px;
     top: 30%;
-    left: 40%;
+    left: 25%;
 }
 
 h1 {
@@ -31,7 +31,7 @@ h1 {
     align-items: center;
     justify-content: center;
     color: yellow;
-    font-size: 60px;
+    font-size: 120px;
     margin-bottom: -15px;
     margin-top: -10px;
 }
@@ -41,11 +41,12 @@ p {
     align-items: center;
     justify-content: center;
     color: yellow;
-    margin-bottom: 40px;
+    margin-bottom: 80px;
+    font-size: 40px;
 }
 
 button {
-    width: 200px;
+    width: 400px;
     padding-left: 10px;
     padding-right: 10px;
     padding-top: 2px;
@@ -55,6 +56,6 @@ button {
     background-image: linear-gradient(rgb(50, 100, 102), black);
     color: yellow;
     font-weight: 900;
-    font-size: 20px;
+    font-size: 40px;
     margin-bottom: -15px;
 }
