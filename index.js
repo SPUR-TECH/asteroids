@@ -80,7 +80,7 @@ const enemies = []
 
 function spawnEnemies() {
     setInterval(() => {
-            const radius = Math.random() * (50 - 4) + 4
+            const radius = Math.random() * (50 - 8) + 8
 
             let x
             let y
@@ -88,7 +88,7 @@ function spawnEnemies() {
             if (Math.random() > 0.5) {
                 x = Math.random() > .5 ? 0 - radius : canvas.width + radius
                 y = Math.random() * canvas.height
-                // const y = Math.random() > .5 ? 0 - radius : canvas.height + radius
+
             } else {
                 x = Math.random() * canvas.width
                 y = Math.random() > .5 ? 0 - radius : canvas.height + radius
@@ -111,16 +111,38 @@ function spawnEnemies() {
         1000)
 }
 
+let animationId
+
 function animate() {
-    requestAnimationFrame(animate)
+    animationId = requestAnimationFrame(animate)
     c.clearRect(0, 0, canvas.width, canvas.height)
     player.draw()
-    projectiles.forEach(projectile => {
+    projectiles.forEach((projectile) => {
         projectile.update()
     })
 
-    enemies.forEach((enemy) => {
+    enemies.forEach((enemy, index) => {
         enemy.update()
+
+        const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y)
+
+        if (dist - enemy.radius - player.radius < 1) {
+            console.log('GAMEOVER!!!')
+            cancelAnimationFrame(animationId)
+        }
+
+        projectiles.forEach((projectile, projectileIndex) => {
+            const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+
+            if (dist - enemy.radius - projectile.radius < 1) {
+                setTimeout(() => {
+                    enemies.splice(index, 1)
+                    projectiles.splice(projectileIndex, 1)
+                    console.log()
+                }, 0)
+
+            }
+        })
     })
 }
 
