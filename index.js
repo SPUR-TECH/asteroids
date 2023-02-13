@@ -7,7 +7,10 @@ const c = canvas.getContext('2d')
 canvas.width = innerWidth
 canvas.height = innerHeight
 
-
+const scoreEl = document.querySelector('#scoreEl')
+const startGameBtn = document.querySelector('#startGameBtn')
+const removeModel = document.querySelector('#model')
+const finalScore = document.querySelector('#finalScore')
 class Player {
     constructor(x, y, radius, color) {
         this.x = x
@@ -68,7 +71,7 @@ class Enemy {
     }
 }
 
-const friction = 0.98
+const friction = 0.99
 class Particle {
     constructor(x, y, radius, color, velocity) {
         this.x = x
@@ -101,15 +104,29 @@ class Particle {
 const x = canvas.width / 2
 const y = canvas.height / 2
 
-const player = new Player(
+let player = new Player(
     x,
     y,
     10,
     'white')
 
-const projectiles = []
-const enemies = []
-const particles = []
+let projectiles = []
+let enemies = []
+let particles = []
+
+function init() {
+    player = new Player(
+        x,
+        y,
+        10,
+        'white')
+    projectiles = []
+    enemies = []
+    particles = []
+    score = 0
+    scoreEl.innerHTML = score
+    finalScore.innerHTML = score
+}
 
 function spawnEnemies() {
     setInterval(() => {
@@ -144,6 +161,7 @@ function spawnEnemies() {
 }
 
 let animationId
+let score = 0
 
 function animate() {
     animationId = requestAnimationFrame(animate)
@@ -177,8 +195,10 @@ function animate() {
         const dist = Math.hypot(player.x - enemy.x, player.y - enemy.y)
 
         if (dist - enemy.radius - player.radius < 1) {
-            console.log('GAMEOVER!!!')
+
             cancelAnimationFrame(animationId)
+            removeModel.style.display = 'flex'
+            finalScore.innerHTML = score
         }
 
         projectiles.forEach((projectile, projectileIndex) => {
@@ -194,6 +214,10 @@ function animate() {
                 }
 
                 if (enemy.radius - 10 > 7) {
+
+                    score += 100
+                    scoreEl.innerHTML = score
+
                     gsap.to(enemy, {
                         radius: enemy.radius - 10
                     })
@@ -201,6 +225,8 @@ function animate() {
                         projectiles.splice(projectileIndex, 1)
                     }, 0)
                 } else {
+                    score += 250
+                    scoreEl.innerHTML = score
                     setTimeout(() => {
                         enemies.splice(index, 1)
                         projectiles.splice(projectileIndex, 1)
@@ -244,5 +270,9 @@ addEventListener('touch', (event) => {
             'red', velocity)
     )
 })
-animate()
-spawnEnemies()
+startGameBtn.addEventListener('click', () => {
+    init()
+    animate()
+    spawnEnemies()
+    removeModel.style.display = 'none'
+})

@@ -1,10 +1,21 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="style.css">
 <title>**** DEFENDER !!! ****</title>
-<style>
-    body {
-        margin: 0;
-    }
-</style>
+
+<div class="score"><span>SCORE: </span><span id="scoreEl"> 0</span></div>
+
+<div id="model">
+    <div>
+        <div>
+            <h1 id="finalScore">0</h1>
+            <p>POINTS</p>
+        </div>
+
+        <div>
+            <button id="startGameBtn">Start</button>
+        </div>
+    </div>
+</div>
 <canvas></canvas>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"

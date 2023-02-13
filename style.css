@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    position: relative;
+    background-color: black;
+}
+
+.score {
+    position: fixed;
+    color: yellow;
+    padding: 20px;
+    font-size: 20px;
+}
+
+#model {
+    position: absolute;
+    background-image: linear-gradient(rgb(82, 82, 82), rgb(83, 0, 0));
+    height: 250px;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    top: 30%;
+    left: 40%;
+}
+
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: yellow;
+    font-size: 60px;
+    margin-bottom: -15px;
+    margin-top: -10px;
+}
+
+p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: yellow;
+    margin-bottom: 40px;
+}
+
+button {
+    width: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 2px;
+    padding-bottom: 8px;
+    margin-bottom: 30px;
+    border-radius: 50px;
+    background-image: linear-gradient(rgb(50, 100, 102), black);
+    color: yellow;
+    font-weight: 900;
+    font-size: 20px;
+    margin-bottom: -15px;
+}
