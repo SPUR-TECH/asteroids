@@ -9,8 +9,11 @@ canvas.height = innerHeight
 
 const scoreEl = document.querySelector('#scoreEl')
 const startGameBtn = document.querySelector('#startGameBtn')
+const restartGameBtn = document.querySelector('#restartGameBtn')
 const removeModel = document.querySelector('#model')
+const removeStartModel = document.querySelector('#startModel')
 const finalScore = document.querySelector('#finalScore')
+console.log(model)
 class Player {
     constructor(x, y, radius, color) {
         this.x = x
@@ -113,6 +116,9 @@ let player = new Player(
 let projectiles = []
 let enemies = []
 let particles = []
+let animationId
+let intervalId
+let score = 0
 
 function init() {
     player = new Player(
@@ -129,7 +135,8 @@ function init() {
 }
 
 function spawnEnemies() {
-    setInterval(() => {
+    intervalId = setInterval(() => {
+            console.log(intervalId)
             const radius = Math.random() * (50 - 8) + 8
 
             let x
@@ -159,9 +166,6 @@ function spawnEnemies() {
         },
         2000)
 }
-
-let animationId
-let score = 0
 
 function animate() {
     animationId = requestAnimationFrame(animate)
@@ -197,7 +201,8 @@ function animate() {
         if (dist - enemy.radius - player.radius < 1) {
 
             cancelAnimationFrame(animationId)
-            removeModel.style.display = 'flex'
+            clearInterval(intervalId)
+            removeModel.style.display = 'block'
             finalScore.innerHTML = score
         }
 
@@ -270,9 +275,15 @@ addEventListener('touch', (event) => {
             'red', velocity)
     )
 })
-startGameBtn.addEventListener('click', () => {
+restartGameBtn.addEventListener('click', () => {
     init()
     animate()
     spawnEnemies()
     removeModel.style.display = 'none'
+})
+startGameBtn.addEventListener('click', () => {
+    init()
+    animate()
+    spawnEnemies()
+    removeStartModel.style.display = 'none'
 })
