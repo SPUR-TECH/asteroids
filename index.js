@@ -1,5 +1,3 @@
-console.log(gsap)
-
 const canvas = document.querySelector('canvas')
 
 const c = canvas.getContext('2d')
@@ -13,7 +11,6 @@ const restartGameBtn = document.querySelector('#restartGameBtn')
 const removeModel = document.querySelector('#model')
 const removeStartModel = document.querySelector('#startModel')
 const finalScore = document.querySelector('#finalScore')
-console.log(model)
 class Player {
     constructor(x, y, radius, color) {
         this.x = x
@@ -136,7 +133,6 @@ function init() {
 
 function spawnEnemies() {
     intervalId = setInterval(() => {
-            console.log(intervalId)
             const radius = Math.random() * (50 - 8) + 8
 
             let x
@@ -285,5 +281,15 @@ startGameBtn.addEventListener('click', () => {
     init()
     animate()
     spawnEnemies()
-    removeStartModel.style.display = 'none'
+    // removeStartModel.style.display = 'none'
+    gsap.to('#startModel', {
+        opacity: 0,
+        scale: 0,
+        duration: 0.65,
+        rotate: 720,
+        ease: 'expo.in',
+        onComplete: () => {
+            startModel.style.display = 'none'
+        }
+    })
 })
