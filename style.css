@@ -29,6 +29,7 @@ body {
 }
 
 #startModel {
+    padding: 20px;
     position: absolute;
     background-image: linear-gradient(rgb(53, 53, 53), rgb(0, 11, 109));
     max-width: 800px;
