@@ -2,4 +2,4 @@
 
 ### Live site:
 
-https://spur-tech.github.io/defender/
+https://spur-tech.github.io/asteroids/
