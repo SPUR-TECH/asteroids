@@ -17,6 +17,10 @@ class Player {
         this.y = y
         this.radius = radius
         this.color = color
+        this.velocity = {
+            x: 0,
+            y: 0
+        }
     }
 
     draw() {
@@ -24,6 +28,29 @@ class Player {
         c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
         c.fillStyle = this.color
         c.fill()
+    }
+
+    update() {
+        this.draw()
+
+        const friction = 0.95
+
+        this.velocity.x *= friction
+        this.velocity.y *= friction
+
+        if (this.x + this.radius + this.velocity.x <= canvas.width &&
+            this.x - this.radius + this.velocity.x >= 0) {
+            this.x += this.velocity.x
+        } else {
+            this.velocity.x = 0
+        }
+
+        if (this.y + this.radius + this.velocity.y <= canvas.height &&
+            this.y - this.radius + this.velocity.y >= 0) {
+            this.y += this.velocity.y
+        } else {
+            this.velocity.y = 0
+        }
     }
 }
 
@@ -167,7 +194,7 @@ function animate() {
     animationId = requestAnimationFrame(animate)
     c.fillStyle = 'rgba(0, 0, 0, .1)'
     c.fillRect(0, 0, canvas.width, canvas.height)
-    player.draw()
+    player.update()
     particles.forEach((particle, index) => {
         if (particle.alpha <= 0) {
             particles.splice(index, 1)
@@ -241,15 +268,15 @@ function animate() {
 addEventListener('click', (event) => {
     event.preventDefault()
     const angle = Math.atan2(
-        event.clientY - canvas.height / 2,
-        event.clientX - canvas.width / 2
+        event.clientY - player.y,
+        event.clientX - player.x
     )
     const velocity = {
         x: Math.cos(angle) * 5,
         y: Math.sin(angle) * 5
     }
     projectiles.push(
-        new Projectile(canvas.width / 2, canvas.height / 2,
+        new Projectile(player.x, player.y,
             5,
             'yellow', velocity)
     )
@@ -258,17 +285,17 @@ addEventListener('click', (event) => {
 addEventListener('touch', (event) => {
     event.preventDefault()
     const angle = Math.atan2(
-        event.clientY - canvas.height / 2,
-        event.clientX - canvas.width / 2
+        event.clientY - player.y,
+        event.clientX - player.x
     )
     const velocity = {
         x: Math.cos(angle) * 5,
         y: Math.sin(angle) * 5
     }
     projectiles.push(
-        new Projectile(canvas.width / 2, canvas.height / 2,
+        new Projectile(player.x, player.y,
             5,
-            'red', velocity)
+            'yellow', velocity)
     )
 })
 restartGameBtn.addEventListener('click', () => {
@@ -292,4 +319,24 @@ startGameBtn.addEventListener('click', () => {
             startModel.style.display = 'none'
         }
     })
+})
+
+addEventListener('keydown', (event) => {
+    switch (event.key) {
+        case 'ArrowRight':
+            player.velocity.x += 1
+            break
+
+        case 'ArrowLeft':
+            player.velocity.x -= 1
+            break
+
+        case 'ArrowUp':
+            player.velocity.y -= 1
+            break
+
+        case 'ArrowDown':
+            player.velocity.y += 1
+            break
+    }
 })
